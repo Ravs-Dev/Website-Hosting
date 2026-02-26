@@ -5,70 +5,103 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Panel Order</title>
 <script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+/* ===== BACKGROUND ANIMASI ===== */
+body {
+  background: linear-gradient(-45deg, #0f172a, #1e293b, #0f172a, #1e1b4b);
+  background-size: 400% 400%;
+  animation: gradientMove 15s ease infinite;
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Glow effect */
+.glow:hover {
+  box-shadow: 0 0 15px rgba(255,255,255,0.4);
+  transform: scale(1.03);
+  transition: 0.3s;
+}
+
+/* Glass card */
+.glass {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+</style>
 </head>
-<body class="bg-black text-white p-8">
+
+<body class="text-white min-h-screen flex justify-center items-center p-6">
+
+<div class="w-full max-w-4xl space-y-12">
 
 <!-- ================= HOSTING ================= -->
-<h1 class="text-2xl font-bold mb-4">Order Hosting</h1>
+<div class="glass p-8 rounded-2xl shadow-xl">
+<h1 class="text-3xl font-bold mb-6 text-center">🚀 Order Hosting</h1>
 
-<div class="flex gap-3 mb-4">
-  <button class="selectHosting bg-blue-600 px-4 py-2 rounded" data-paket="SA:MP">SA:MP</button>
-  <button class="selectHosting bg-green-600 px-4 py-2 rounded" data-paket="Minecraft">Minecraft</button>
-  <button class="selectHosting bg-purple-600 px-4 py-2 rounded" data-paket="Bot Discord">Bot Discord</button>
+<div class="flex gap-3 mb-6 justify-center">
+  <button class="selectHosting glow bg-blue-600 px-4 py-2 rounded-lg" data-paket="SA:MP">SA:MP</button>
+  <button class="selectHosting glow bg-green-600 px-4 py-2 rounded-lg" data-paket="Minecraft">Minecraft</button>
+  <button class="selectHosting glow bg-purple-600 px-4 py-2 rounded-lg" data-paket="Bot Discord">Bot Discord</button>
 </div>
 
-<div class="grid gap-3 max-w-md">
-  <input type="number" id="hostRam" placeholder="RAM (GB)" class="p-2 text-black rounded">
-  <input type="number" id="hostCpu" placeholder="CPU Core" class="p-2 text-black rounded">
-  <input type="number" id="hostStorage" placeholder="Storage (GB)" class="p-2 text-black rounded">
+<div class="grid gap-4">
+  <input type="number" id="hostRam" placeholder="RAM (GB)" class="p-3 text-black rounded-lg">
+  <input type="number" id="hostCpu" placeholder="CPU Core" class="p-3 text-black rounded-lg">
+  <input type="number" id="hostStorage" placeholder="Storage (GB)" class="p-3 text-black rounded-lg">
 
   <div id="slotWrapper">
-    <input type="number" id="hostSlot" placeholder="Slot Player" class="p-2 text-black rounded">
+    <input type="number" id="hostSlot" placeholder="Slot Player" class="p-3 text-black rounded-lg">
   </div>
 
-  <button id="kirimHosting" class="bg-red-600 p-3 rounded">Kirim Hosting</button>
+  <button id="kirimHosting" class="glow bg-red-600 p-3 rounded-lg font-semibold">Kirim Hosting</button>
 </div>
-
-<hr class="my-10 border-gray-700">
+</div>
 
 <!-- ================= BOT JS ================= -->
-<h1 class="text-2xl font-bold mb-4">Order Bot JS</h1>
+<div class="glass p-8 rounded-2xl shadow-xl">
+<h1 class="text-3xl font-bold mb-6 text-center">🤖 Order Bot JS</h1>
 
-<div class="flex gap-3 mb-4">
-  <button class="selectBot bg-yellow-600 px-4 py-2 rounded" data-paket="Basic">Basic</button>
-  <button class="selectBot bg-orange-600 px-4 py-2 rounded" data-paket="Premium">Premium</button>
+<div class="flex gap-3 mb-6 justify-center">
+  <button class="selectBot glow bg-yellow-500 px-4 py-2 rounded-lg text-black" data-paket="Basic">Basic</button>
+  <button class="selectBot glow bg-orange-500 px-4 py-2 rounded-lg text-black" data-paket="Premium">Premium</button>
 </div>
 
-<div class="grid gap-3 max-w-md">
-  <input type="text" id="botNama" placeholder="Nama Bot" class="p-2 text-black rounded">
-  <textarea id="botFitur" placeholder="Fitur yang diminta" class="p-2 text-black rounded"></textarea>
-  <button id="kirimBot" class="bg-red-600 p-3 rounded">Kirim Bot</button>
+<div class="grid gap-4">
+  <input type="text" id="botNama" placeholder="Nama Bot" class="p-3 text-black rounded-lg">
+  <textarea id="botFitur" placeholder="Fitur yang diminta" class="p-3 text-black rounded-lg"></textarea>
+  <button id="kirimBot" class="glow bg-red-600 p-3 rounded-lg font-semibold">Kirim Bot</button>
 </div>
-
-<hr class="my-10 border-gray-700">
+</div>
 
 <!-- ================= JASA DEVELOPER ================= -->
-<h1 class="text-2xl font-bold mb-4">Jasa Developer</h1>
+<div class="glass p-8 rounded-2xl shadow-xl">
+<h1 class="text-3xl font-bold mb-6 text-center">💻 Jasa Developer</h1>
 
-<div class="grid gap-3 max-w-md">
-  <input type="text" id="devNama" placeholder="Nama Project" class="p-2 text-black rounded">
-  <textarea id="devDetail" placeholder="Detail Project" class="p-2 text-black rounded"></textarea>
-  <button id="kirimDev" class="bg-red-600 p-3 rounded">Kirim Jasa Dev</button>
+<div class="grid gap-4">
+  <input type="text" id="devNama" placeholder="Nama Project" class="p-3 text-black rounded-lg">
+  <textarea id="devDetail" placeholder="Detail Project" class="p-3 text-black rounded-lg"></textarea>
+  <button id="kirimDev" class="glow bg-red-600 p-3 rounded-lg font-semibold">Kirim Jasa Dev</button>
+</div>
+</div>
+
 </div>
 
 <script>
-
-const nomorAdmin = "6281234567890"; // GANTI NOMOR ADMIN
+const nomorAdmin = "6281234567890";
 
 let selectedHosting = "";
 let selectedBot = "";
 
-/* ================= HOSTING ================= */
-
+/* HOSTING */
 document.querySelectorAll(".selectHosting").forEach(btn=>{
   btn.addEventListener("click", function(){
     selectedHosting = this.dataset.paket;
-
     const slotWrapper = document.getElementById("slotWrapper");
 
     if (selectedHosting === "Bot Discord") {
@@ -87,88 +120,46 @@ function calcHostPrice() {
   const slot = parseInt(document.getElementById("hostSlot").value) || 0;
 
   let harga = (ram * 10000) + (cpu * 5000) + ((storage/50) * 10000);
-
-  if (selectedHosting !== "Bot Discord") {
-    harga += (slot * 1000);
-  }
-
+  if (selectedHosting !== "Bot Discord") harga += (slot * 1000);
   return harga;
 }
 
-document.getElementById("kirimHosting").addEventListener("click", function(){
-
-  if (!selectedHosting) {
-    alert("Pilih paket hosting dulu!");
-    return;
-  }
-
-  const ram = document.getElementById("hostRam").value;
-  const cpu = document.getElementById("hostCpu").value;
-  const storage = document.getElementById("hostStorage").value;
-  const slot = document.getElementById("hostSlot").value;
+document.getElementById("kirimHosting").onclick = function(){
+  if (!selectedHosting) return alert("Pilih paket hosting dulu!");
 
   const harga = calcHostPrice();
 
   let pesan = `Halo Admin,%0ASaya ingin pesan Hosting%0A%0A`;
   pesan += `Paket: ${selectedHosting}%0A`;
-  pesan += `RAM: ${ram} GB%0A`;
-  pesan += `CPU: ${cpu} Core%0A`;
-  pesan += `Storage: ${storage} GB%0A`;
-
-  if (selectedHosting !== "Bot Discord") {
-    pesan += `Slot: ${slot}%0A`;
-  }
-
+  pesan += `RAM: ${hostRam.value} GB%0A`;
+  pesan += `CPU: ${hostCpu.value} Core%0A`;
+  pesan += `Storage: ${hostStorage.value} GB%0A`;
+  if (selectedHosting !== "Bot Discord") pesan += `Slot: ${hostSlot.value}%0A`;
   pesan += `Total Harga: Rp ${harga}`;
 
   window.open(`https://wa.me/${nomorAdmin}?text=${pesan}`, "_blank");
-});
+};
 
-/* ================= BOT JS ================= */
-
+/* BOT */
 document.querySelectorAll(".selectBot").forEach(btn=>{
-  btn.addEventListener("click", function(){
-    selectedBot = this.dataset.paket;
-  });
+  btn.onclick = ()=> selectedBot = btn.dataset.paket;
 });
 
-document.getElementById("kirimBot").addEventListener("click", function(){
+document.getElementById("kirimBot").onclick = function(){
+  if (!selectedBot) return alert("Pilih paket bot dulu!");
+  if (!botNama.value || !botFitur.value) return alert("Lengkapi data bot!");
 
-  if (!selectedBot) {
-    alert("Pilih paket bot dulu!");
-    return;
-  }
-
-  const nama = document.getElementById("botNama").value;
-  const fitur = document.getElementById("botFitur").value;
-
-  if (!nama || !fitur) {
-    alert("Lengkapi data bot!");
-    return;
-  }
-
-  const pesan = `Halo Admin,%0ASaya ingin pesan Bot JS%0A%0APaket: ${selectedBot}%0ANama Bot: ${nama}%0AFitur:%0A${fitur}`;
-
+  const pesan = `Halo Admin,%0ASaya ingin pesan Bot JS%0A%0APaket: ${selectedBot}%0ANama Bot: ${botNama.value}%0AFitur:%0A${botFitur.value}`;
   window.open(`https://wa.me/${nomorAdmin}?text=${pesan}`, "_blank");
-});
+};
 
-/* ================= JASA DEV ================= */
+/* DEV */
+document.getElementById("kirimDev").onclick = function(){
+  if (!devNama.value || !devDetail.value) return alert("Isi detail project dulu!");
 
-document.getElementById("kirimDev").addEventListener("click", function(){
-
-  const nama = document.getElementById("devNama").value;
-  const detail = document.getElementById("devDetail").value;
-
-  if (!nama || !detail) {
-    alert("Isi detail project dulu!");
-    return;
-  }
-
-  const pesan = `Halo Admin,%0ASaya ingin menggunakan Jasa Developer%0A%0ANama Project: ${nama}%0ADetail:%0A${detail}`;
-
+  const pesan = `Halo Admin,%0ASaya ingin menggunakan Jasa Developer%0A%0ANama Project: ${devNama.value}%0ADetail:%0A${devDetail.value}`;
   window.open(`https://wa.me/${nomorAdmin}?text=${pesan}`, "_blank");
-});
-
+};
 </script>
 
 </body>

@@ -107,8 +107,9 @@ body{
 
 <div id="botTypeWrapper" style="display:none;">
 <select id="botType" class="w-full p-3 rounded bg-black/40 border border-slate-700">
-<option value="Basic">Basic</option>
-<option value="Higs">Higs</option>
+<option value="">-- Pilih Paket Bot --</option>
+<option value="Basic">Basic (+5000)</option>
+<option value="Higs">Higs (+10000)</option>
 </select>
 </div>
 
@@ -174,25 +175,22 @@ botTypeWrapper.style.display="block";
 slotWrapper.style.display="";
 botTypeWrapper.style.display="none";
 }
-
 updateHostPrice();
 });
 });
 
 function calcHostPrice(){
 let harga=0;
-
 harga+=hostRam.value*2000;
 harga+=hostCpu.value*2000;
 harga+=hostStorage.value*2000;
 
 if(selectedHosting==="Bot Discord"){
-if(botType.value==="Besic") harga+=5000;
+if(botType.value==="Basic") harga+=5000;
 if(botType.value==="Higs") harga+=10000;
 }else{
 harga+=hostSlot.value*1000;
 }
-
 return harga;
 }
 
@@ -211,6 +209,11 @@ e.preventDefault();
 
 if(!selectedHosting){
 hostStatus.textContent="⚠️ Pilih paket dulu.";
+return;
+}
+
+if(selectedHosting==="Bot Discord" && botType.value===""){
+hostStatus.textContent="⚠️ Pilih paket Bot dulu.";
 return;
 }
 
@@ -267,4 +270,3 @@ updateDevPrice();
 
 </body>
 </html>
-

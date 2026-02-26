@@ -182,8 +182,8 @@ function calcHostPrice(){
 let harga=(hostRam.value*10000)+(hostCpu.value*5000)+((hostStorage.value/50)*10000);
 
 if(selectedHosting==="Bot Discord"){
-if(botType.value==="Basic") harga+=20000;
-if(botType.value==="Higs") harga+=40000;
+if(botType.value==="Basic") harga+=10000;
+if(botType.value==="Higs") harga+=20000;
 }else{
 harga+=(hostSlot.value*1000);
 }
@@ -261,3 +261,4 @@ updateDevPrice();
 
 </body>
 </html>
+

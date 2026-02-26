@@ -35,13 +35,15 @@ body{
   background:
   radial-gradient(circle at 30% 40%, rgba(14,165,233,0.4), transparent 60%),
   radial-gradient(circle at 70% 60%, rgba(239,68,68,0.35), transparent 60%);
-  animation:auroraMove 18s ease-in-out infinite alternate;
+  animation:auroraMove 20s linear infinite;
   filter:blur(90px);
 }
 @keyframes auroraMove{
-  0%{transform:translate(0,0) scale(1);}
-  50%{transform:translate(40px,-30px) scale(1.1);}
-  100%{transform:translate(-30px,40px) scale(1);}
+  0%{transform:translate(-30px,-30px) scale(1);}
+  25%{transform:translate(40px,-20px) scale(1.1);}
+  50%{transform:translate(-20px,40px) scale(1);}
+  75%{transform:translate(30px,20px) scale(1.1);}
+  100%{transform:translate(-30px,-30px) scale(1);}
 }
 .glass{
   background:var(--glass-bg);
@@ -67,7 +69,6 @@ body{
 
 <main class="max-w-6xl mx-auto px-6 pb-20">
 
-<!-- PAKET HOSTING -->
 <div class="grid md:grid-cols-3 gap-6">
 
 <div class="glass p-6 rounded-xl text-center" data-paket="SA:MP">
@@ -90,7 +91,6 @@ body{
 
 </div>
 
-<!-- FORM HOSTING -->
 <div class="glass rounded-2xl p-6 mt-10">
 <h3 class="text-xl font-semibold">Form Pesanan Hosting</h3>
 <p class="text-slate-400 text-sm">Paket: <span id="selectedLabel">Belum memilih</span></p>
@@ -101,11 +101,10 @@ body{
 <input type="tel" id="hostWa" placeholder="Nomor WA (08...)" required class="w-full p-3 rounded bg-black/40 border border-slate-700">
 
 <div class="grid grid-cols-2 gap-3">
-<input type="number" id="hostRam" min="1" value="1" class="p-3 rounded bg-black/40 border border-slate-700" placeholder="RAM (GB)">
-<input type="number" id="hostCpu" min="1" value="1" class="p-3 rounded bg-black/40 border border-slate-700" placeholder="CPU (Core)">
+<input type="number" id="hostRam" min="0" value="0" class="p-3 rounded bg-black/40 border border-slate-700" placeholder="RAM (GB)">
+<input type="number" id="hostCpu" min="0" value="0" class="p-3 rounded bg-black/40 border border-slate-700" placeholder="CPU (Core)">
 </div>
 
-<!-- BOT TYPE -->
 <div id="botTypeWrapper" style="display:none;">
 <select id="botType" class="w-full p-3 rounded bg-black/40 border border-slate-700">
 <option value="Basic">Basic</option>
@@ -114,9 +113,9 @@ body{
 </div>
 
 <div class="grid grid-cols-2 gap-3">
-<input type="number" id="hostStorage" min="50" step="50" value="50" class="p-3 rounded bg-black/40 border border-slate-700" placeholder="Storage (MB)">
+<input type="number" id="hostStorage" min="0" value="0" class="p-3 rounded bg-black/40 border border-slate-700" placeholder="Storage (Unit)">
 <div id="slotWrapper">
-<input type="number" id="hostSlot" min="1" value="10" class="p-3 rounded bg-black/40 border border-slate-700" placeholder="Slot Player">
+<input type="number" id="hostSlot" min="0" value="0" class="p-3 rounded bg-black/40 border border-slate-700" placeholder="Slot Player">
 </div>
 </div>
 
@@ -128,7 +127,6 @@ body{
 </form>
 </div>
 
-<!-- FORM JASA DEV -->
 <div class="glass rounded-2xl p-6 mt-10">
 <h3 class="text-xl font-semibold">💻 Jasa Script & Website</h3>
 
@@ -157,8 +155,12 @@ body{
 <script>
 const ADMIN_WA="6285123263221";
 let selectedHosting="";
+
 const slotWrapper=document.getElementById("slotWrapper");
 const botTypeWrapper=document.getElementById("botTypeWrapper");
+const selectedLabel=document.getElementById("selectedLabel");
+const hostPrice=document.getElementById("hostPrice");
+const hostStatus=document.getElementById("hostStatus");
 
 document.querySelectorAll(".select-paket").forEach(btn=>{
 btn.addEventListener("click",e=>{
@@ -168,24 +170,26 @@ selectedLabel.textContent=selectedHosting;
 if(selectedHosting==="Bot Discord"){
 slotWrapper.style.display="none";
 botTypeWrapper.style.display="block";
-hostSlot.value=0;
 }else{
 slotWrapper.style.display="";
 botTypeWrapper.style.display="none";
-hostSlot.value=10;
 }
+
 updateHostPrice();
 });
 });
 
 function calcHostPrice(){
-let harga=(hostRam.value*10000)+(hostCpu.value*5000)+((hostStorage.value/50)*10000);
+let harga=0;
+
+harga+=hostRam.value*2000;
+harga+=hostCpu.value*2000;
+harga+=hostStorage.value*2000;
 
 if(selectedHosting==="Bot Discord"){
-if(botType.value==="Basic") harga+=10000;
-if(botType.value==="Higs") harga+=20000;
+if(botType.value==="Higs") harga+=10000;
 }else{
-harga+=(hostSlot.value*1000);
+harga+=hostSlot.value*1000;
 }
 
 return harga;
@@ -203,6 +207,7 @@ updateHostPrice();
 
 hostingForm.addEventListener("submit",e=>{
 e.preventDefault();
+
 if(!selectedHosting){
 hostStatus.textContent="⚠️ Pilih paket dulu.";
 return;
@@ -215,9 +220,9 @@ let pesan=
 Nama: ${hostName.value}
 WA: ${hostWa.value}
 Paket: ${selectedHosting}
-RAM: ${hostRam.value} GB
-CPU: ${hostCpu.value} Core
-Storage: ${hostStorage.value} MB
+RAM: ${hostRam.value}
+CPU: ${hostCpu.value}
+Storage: ${hostStorage.value}
 ${selectedHosting==="Bot Discord" ? "Paket Bot: "+botType.value : "Slot: "+hostSlot.value}
 Harga: Rp${Number(harga).toLocaleString()}
 Catatan: ${hostNote.value}`;
@@ -261,4 +266,3 @@ updateDevPrice();
 
 </body>
 </html>
-

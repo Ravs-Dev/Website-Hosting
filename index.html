@@ -3,215 +3,170 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ravs Store Hosting & Jasa</title>
-
+<title>Panel Order</title>
 <script src="https://cdn.tailwindcss.com"></script>
-
-<style>
-:root{
-  --glass-bg: rgba(255,255,255,0.05);
-  --card-border: rgba(255,255,255,0.08);
-}
-body{
-  background:#000;
-  min-height:100vh;
-  color:#e2e8f0;
-  font-family:sans-serif;
-}
-.cyber-bg{
-  position:fixed;
-  inset:0;
-  z-index:-1;
-  overflow:hidden;
-  background:#000;
-}
-.cyber-bg::before,
-.cyber-bg::after{
-  content:"";
-  position:absolute;
-  width:120%;
-  height:120%;
-  top:-10%;
-  left:-10%;
-  background:
-  radial-gradient(circle at 30% 40%, rgba(14,165,233,0.4), transparent 60%),
-  radial-gradient(circle at 70% 60%, rgba(239,68,68,0.35), transparent 60%);
-  animation:auroraMove 18s ease-in-out infinite alternate;
-  filter:blur(90px);
-}
-@keyframes auroraMove{
-  0%{transform:translate(0,0) scale(1);}
-  50%{transform:translate(40px,-30px) scale(1.1);}
-  100%{transform:translate(-30px,40px) scale(1);}
-}
-.glass{
-  background:var(--glass-bg);
-  backdrop-filter:blur(10px);
-  border:1px solid var(--card-border);
-}
-.btn-accent{
-  background:linear-gradient(90deg,#ef4444,#0ea5e9);
-  color:white;
-}
-</style>
 </head>
+<body class="bg-black text-white p-8">
 
-<body>
+<!-- ================= HOSTING ================= -->
+<h1 class="text-2xl font-bold mb-4">Order Hosting</h1>
 
-<div class="cyber-bg"></div>
-
-<header class="py-10 text-center">
-<h1 class="text-4xl font-extrabold">🔥 Ravs Store 🔥</h1>
-<p class="text-slate-400 mt-2">Hosting • Script • Website</p>
-</header>
-
-<main class="max-w-6xl mx-auto px-6 pb-20">
-
-<div class="grid md:grid-cols-3 gap-4">
-
-<div class="p-4 rounded-xl glass text-center border" data-paket="SA:MP">
-<h3 class="font-bold text-red-300">Hosting SA:MP</h3>
-<button class="mt-4 w-full py-2 rounded btn-accent select-paket">Pilih</button>
+<div class="flex gap-3 mb-4">
+  <button class="selectHosting bg-blue-600 px-4 py-2 rounded" data-paket="SA:MP">SA:MP</button>
+  <button class="selectHosting bg-green-600 px-4 py-2 rounded" data-paket="Minecraft">Minecraft</button>
+  <button class="selectHosting bg-purple-600 px-4 py-2 rounded" data-paket="Bot Discord">Bot Discord</button>
 </div>
 
-<div class="p-4 rounded-xl glass text-center border" data-paket="Minecraft">
-<h3 class="font-bold text-blue-300">Hosting Minecraft</h3>
-<button class="mt-4 w-full py-2 rounded btn-accent select-paket">Pilih</button>
+<div class="grid gap-3 max-w-md">
+  <input type="number" id="hostRam" placeholder="RAM (GB)" class="p-2 text-black rounded">
+  <input type="number" id="hostCpu" placeholder="CPU Core" class="p-2 text-black rounded">
+  <input type="number" id="hostStorage" placeholder="Storage (GB)" class="p-2 text-black rounded">
+
+  <div id="slotWrapper">
+    <input type="number" id="hostSlot" placeholder="Slot Player" class="p-2 text-black rounded">
+  </div>
+
+  <button id="kirimHosting" class="bg-red-600 p-3 rounded">Kirim Hosting</button>
 </div>
 
-<div class="p-4 rounded-xl glass text-center border" data-paket="Bot Discord">
-<h3 class="font-bold text-yellow-300">Hosting Bot Discord</h3>
-<button class="mt-4 w-full py-2 rounded btn-accent select-paket">Pilih</button>
+<hr class="my-10 border-gray-700">
+
+<!-- ================= BOT JS ================= -->
+<h1 class="text-2xl font-bold mb-4">Order Bot JS</h1>
+
+<div class="flex gap-3 mb-4">
+  <button class="selectBot bg-yellow-600 px-4 py-2 rounded" data-paket="Basic">Basic</button>
+  <button class="selectBot bg-orange-600 px-4 py-2 rounded" data-paket="Premium">Premium</button>
 </div>
 
+<div class="grid gap-3 max-w-md">
+  <input type="text" id="botNama" placeholder="Nama Bot" class="p-2 text-black rounded">
+  <textarea id="botFitur" placeholder="Fitur yang diminta" class="p-2 text-black rounded"></textarea>
+  <button id="kirimBot" class="bg-red-600 p-3 rounded">Kirim Bot</button>
 </div>
 
-<div id="orderCard" class="glass rounded-2xl p-6 mt-8">
-<h3 class="text-xl font-semibold">Form Pesanan Hosting</h3>
-<p class="text-slate-400 text-sm">Paket dipilih: <span id="selectedLabel">Belum memilih</span></p>
+<hr class="my-10 border-gray-700">
 
-<form id="hostingForm" class="mt-4 space-y-4">
+<!-- ================= JASA DEVELOPER ================= -->
+<h1 class="text-2xl font-bold mb-4">Jasa Developer</h1>
 
-<input type="text" id="hostName" placeholder="Nama lengkap" required class="w-full p-3 rounded bg-black/40 border border-slate-700"/>
-<input type="tel" id="hostWa" placeholder="Nomor WA (08...)" required class="w-full p-3 rounded bg-black/40 border border-slate-700"/>
-
-<div class="grid grid-cols-2 gap-3">
-<input type="number" id="hostRam" value="1" min="1" class="p-3 rounded bg-black/40 border border-slate-700" placeholder="RAM (GB)"/>
-<input type="number" id="hostCpu" value="1" min="1" class="p-3 rounded bg-black/40 border border-slate-700" placeholder="CPU (Core)"/>
+<div class="grid gap-3 max-w-md">
+  <input type="text" id="devNama" placeholder="Nama Project" class="p-2 text-black rounded">
+  <textarea id="devDetail" placeholder="Detail Project" class="p-2 text-black rounded"></textarea>
+  <button id="kirimDev" class="bg-red-600 p-3 rounded">Kirim Jasa Dev</button>
 </div>
-
-<div class="grid grid-cols-2 gap-3">
-<input type="number" id="hostStorage" value="50" min="50" step="50" class="p-3 rounded bg-black/40 border border-slate-700" placeholder="Storage (MB)"/>
-
-<div id="slotWrapper">
-<input type="number" id="hostSlot" value="10" min="1" class="p-3 rounded bg-black/40 border border-slate-700" placeholder="Slot Player"/>
-</div>
-</div>
-
-<textarea id="hostNote" rows="3" placeholder="Catatan tambahan" class="w-full p-3 rounded bg-black/40 border border-slate-700"></textarea>
-
-<button type="submit" class="btn-accent px-4 py-2 rounded">Kirim Pesanan</button>
-
-<p id="hostPrice" class="text-emerald-400 font-bold"></p>
-<p id="hostStatus" class="text-sm mt-2"></p>
-
-</form>
-</div>
-
-</main>
 
 <script>
 
-const ADMIN_WA = "6285123263221";
+const nomorAdmin = "6281234567890"; // GANTI NOMOR ADMIN
+
 let selectedHosting = "";
+let selectedBot = "";
 
-const slotWrapper = document.getElementById("slotWrapper");
+/* ================= HOSTING ================= */
 
-document.querySelectorAll(".select-paket").forEach(btn=>{
-btn.addEventListener("click",(e)=>{
-selectedHosting = e.target.closest("[data-paket]").dataset.paket;
-document.getElementById("selectedLabel").textContent = selectedHosting;
+document.querySelectorAll(".selectHosting").forEach(btn=>{
+  btn.addEventListener("click", function(){
+    selectedHosting = this.dataset.paket;
 
-if(selectedHosting === "Bot Discord"){
-slotWrapper.style.display="none";
-document.getElementById("hostSlot").value = 0;
-}else{
-slotWrapper.style.display="";
-document.getElementById("hostSlot").value = 10;
-}
+    const slotWrapper = document.getElementById("slotWrapper");
 
-updatePrice();
-});
-});
-
-function calcPrice(){
-const ram = parseInt(hostRam.value)||0;
-const cpu = parseInt(hostCpu.value)||0;
-const storage = parseInt(hostStorage.value)||0;
-const slot = parseInt(hostSlot.value)||0;
-
-let harga = (ram*10000)+(cpu*5000)+((storage/50)*10000);
-
-if(selectedHosting !== "Bot Discord"){
-harga += (slot*1000);
-}
-return harga;
-}
-
-function updatePrice(){
-hostPrice.textContent="💰 Total Harga: Rp"+calcPrice().toLocaleString();
-}
-
-["hostRam","hostCpu","hostStorage","hostSlot"].forEach(id=>{
-document.getElementById(id).addEventListener("input",updatePrice);
+    if (selectedHosting === "Bot Discord") {
+      slotWrapper.style.display = "none";
+      document.getElementById("hostSlot").value = 0;
+    } else {
+      slotWrapper.style.display = "block";
+    }
+  });
 });
 
-updatePrice();
+function calcHostPrice() {
+  const ram = parseInt(document.getElementById("hostRam").value) || 0;
+  const cpu = parseInt(document.getElementById("hostCpu").value) || 0;
+  const storage = parseInt(document.getElementById("hostStorage").value) || 0;
+  const slot = parseInt(document.getElementById("hostSlot").value) || 0;
 
-document.getElementById("hostingForm").addEventListener("submit",async(e)=>{
-e.preventDefault();
+  let harga = (ram * 10000) + (cpu * 5000) + ((storage/50) * 10000);
 
-if(!selectedHosting){
-hostStatus.textContent="⚠️ Pilih paket dulu.";
-return;
+  if (selectedHosting !== "Bot Discord") {
+    harga += (slot * 1000);
+  }
+
+  return harga;
 }
 
-const name = hostName.value.trim();
-const wa = hostWa.value.trim();
-const harga = calcPrice();
+document.getElementById("kirimHosting").addEventListener("click", function(){
 
-const pesan =
-`🔥 Pesanan Hosting 🔥
-Nama: ${name}
-WA: ${wa}
-Paket: ${selectedHosting}
-RAM: ${hostRam.value} GB
-CPU: ${hostCpu.value} Core
-Storage: ${hostStorage.value} MB
-${selectedHosting !== "Bot Discord" ? `Slot: ${hostSlot.value}` : ""}
-Harga: Rp${harga.toLocaleString()}
-Catatan: ${hostNote.value}`;
+  if (!selectedHosting) {
+    alert("Pilih paket hosting dulu!");
+    return;
+  }
 
-window.open(`https://wa.me/${ADMIN_WA}?text=${encodeURIComponent(pesan)}`,'_blank');
+  const ram = document.getElementById("hostRam").value;
+  const cpu = document.getElementById("hostCpu").value;
+  const storage = document.getElementById("hostStorage").value;
+  const slot = document.getElementById("hostSlot").value;
 
-try{
-await fetch('/api/order',{
-method:'POST',
-headers:{'Content-Type':'application/json'},
-body:JSON.stringify({
-paket:selectedHosting,
-name,
-wa,
-note:pesan
-})
+  const harga = calcHostPrice();
+
+  let pesan = `Halo Admin,%0ASaya ingin pesan Hosting%0A%0A`;
+  pesan += `Paket: ${selectedHosting}%0A`;
+  pesan += `RAM: ${ram} GB%0A`;
+  pesan += `CPU: ${cpu} Core%0A`;
+  pesan += `Storage: ${storage} GB%0A`;
+
+  if (selectedHosting !== "Bot Discord") {
+    pesan += `Slot: ${slot}%0A`;
+  }
+
+  pesan += `Total Harga: Rp ${harga}`;
+
+  window.open(`https://wa.me/${nomorAdmin}?text=${pesan}`, "_blank");
 });
-hostStatus.textContent="✅ Pesanan terkirim!";
-hostingForm.reset();
-updatePrice();
-}catch{
-hostStatus.textContent="⚠️ Gagal kirim ke server, tapi WA sudah terbuka.";
-}
 
+/* ================= BOT JS ================= */
+
+document.querySelectorAll(".selectBot").forEach(btn=>{
+  btn.addEventListener("click", function(){
+    selectedBot = this.dataset.paket;
+  });
+});
+
+document.getElementById("kirimBot").addEventListener("click", function(){
+
+  if (!selectedBot) {
+    alert("Pilih paket bot dulu!");
+    return;
+  }
+
+  const nama = document.getElementById("botNama").value;
+  const fitur = document.getElementById("botFitur").value;
+
+  if (!nama || !fitur) {
+    alert("Lengkapi data bot!");
+    return;
+  }
+
+  const pesan = `Halo Admin,%0ASaya ingin pesan Bot JS%0A%0APaket: ${selectedBot}%0ANama Bot: ${nama}%0AFitur:%0A${fitur}`;
+
+  window.open(`https://wa.me/${nomorAdmin}?text=${pesan}`, "_blank");
+});
+
+/* ================= JASA DEV ================= */
+
+document.getElementById("kirimDev").addEventListener("click", function(){
+
+  const nama = document.getElementById("devNama").value;
+  const detail = document.getElementById("devDetail").value;
+
+  if (!nama || !detail) {
+    alert("Isi detail project dulu!");
+    return;
+  }
+
+  const pesan = `Halo Admin,%0ASaya ingin menggunakan Jasa Developer%0A%0ANama Project: ${nama}%0ADetail:%0A${detail}`;
+
+  window.open(`https://wa.me/${nomorAdmin}?text=${pesan}`, "_blank");
 });
 
 </script>

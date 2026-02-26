@@ -12,591 +12,209 @@
   --glass-bg: rgba(255,255,255,0.05);
   --card-border: rgba(255,255,255,0.08);
 }
-
 body{
   background:#000;
   min-height:100vh;
   color:#e2e8f0;
   font-family:sans-serif;
-  -webkit-font-smoothing:antialiased;
 }
-
-/* ===============================
-   SMOOTH AURORA BACKGROUND
-=================================*/
-
-.cyber-bg {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  overflow: hidden;
-  background: #000;
+.cyber-bg{
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  overflow:hidden;
+  background:#000;
 }
-
 .cyber-bg::before,
-.cyber-bg::after {
-  content: "";
-  position: absolute;
-  width: 120%;
-  height: 120%;
-  top: -10%;
-  left: -10%;
-  background: radial-gradient(circle at 30% 40%, rgba(14,165,233,0.4), transparent 60%),
-              radial-gradient(circle at 70% 60%, rgba(239,68,68,0.35), transparent 60%),
-              radial-gradient(circle at 50% 20%, rgba(34,211,238,0.3), transparent 60%);
-  animation: auroraMove 18s ease-in-out infinite alternate;
-  filter: blur(90px);
+.cyber-bg::after{
+  content:"";
+  position:absolute;
+  width:120%;
+  height:120%;
+  top:-10%;
+  left:-10%;
+  background:
+  radial-gradient(circle at 30% 40%, rgba(14,165,233,0.4), transparent 60%),
+  radial-gradient(circle at 70% 60%, rgba(239,68,68,0.35), transparent 60%);
+  animation:auroraMove 18s ease-in-out infinite alternate;
+  filter:blur(90px);
 }
-
-.cyber-bg::after {
-  animation-delay: 6s;
-  opacity: 0.7;
+@keyframes auroraMove{
+  0%{transform:translate(0,0) scale(1);}
+  50%{transform:translate(40px,-30px) scale(1.1);}
+  100%{transform:translate(-30px,40px) scale(1);}
 }
-
-@keyframes auroraMove {
-  0% { transform: translate(0,0) scale(1); }
-  50% { transform: translate(40px,-30px) scale(1.1); }
-  100% { transform: translate(-30px,40px) scale(1); }
+.glass{
+  background:var(--glass-bg);
+  backdrop-filter:blur(10px);
+  border:1px solid var(--card-border);
 }
-
-/* Glass Card */
-.glass {
-  background: var(--glass-bg);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--card-border);
-}
-
-.btn-accent {
-  background: linear-gradient(90deg,#ef4444,#0ea5e9);
-  color: white;
-  transition: 0.3s;
-}
-
-.btn-accent:hover{
-  opacity:0.8;
+.btn-accent{
+  background:linear-gradient(90deg,#ef4444,#0ea5e9);
+  color:white;
 }
 </style>
 </head>
 
-<body class="text-slate-100 antialiased">
+<body>
 
-<!-- Background -->
 <div class="cyber-bg"></div>
 
 <header class="py-10 text-center">
-  <h1 class="text-4xl font-extrabold">🔥 Ravs Store 🔥</h1>
-  <p class="text-slate-400 mt-2">Hosting • Script • Website</p>
+<h1 class="text-4xl font-extrabold">🔥 Ravs Store 🔥</h1>
+<p class="text-slate-400 mt-2">Hosting • Script • Website</p>
 </header>
 
 <main class="max-w-6xl mx-auto px-6 pb-20">
 
-  <div class="grid md:grid-cols-3 gap-8">
+<div class="grid md:grid-cols-3 gap-4">
 
-  <div class="mt-6 grid md:grid-cols-3 gap-4">
-    <div class="p-4 rounded-xl glass text-center border" data-paket="SA:MP">
-    <h3 class="font-bold text-red-300">Hosting SA:MP</h3>
-    <p class="text-xs text-slate-400 mt-1">Slot & storage custom</p>
-    <button class="mt-4 w-full py-2 rounded btn-accent hover:opacity-95 select-paket">Pilih</button>
-    
-  </div> <div class="p-4 rounded-xl glass text-center border" data-paket="Minecraft">
-    <h3 class="font-bold text-blue-300">Hosting Minecraft</h3>
-    <p class="text-xs text-slate-400 mt-1">Dukungan plugin & mod</p>
-    <button class="mt-4 w-full py-2 rounded btn-accent hover:opacity-95 select-paket">Pilih</button>
-    
-  </div> <div class="p-4 rounded-xl glass text-center border" data-paket="Bot Discord">
-    <h3 class="font-bold text-yellow-300">Hosting Bot Discord</h3>
-    <p class="text-xs text-slate-400 mt-1">Uptime & monitoring</p>
-    <button class="mt-4 w-full py-2 rounded btn-accent hover:opacity-95 select-paket">Pilih</button> </div> </div> </div>
+<div class="p-4 rounded-xl glass text-center border" data-paket="SA:MP">
+<h3 class="font-bold text-red-300">Hosting SA:MP</h3>
+<button class="mt-4 w-full py-2 rounded btn-accent select-paket">Pilih</button>
+</div>
 
-        <!-- Form Pesanan (Hosting) -->
-        <div id="orderCard" class="glass rounded-2xl p-6 fade-up">
-          <div class="flex items-start justify-between">
-            <div>
-              <h3 class="text-xl font-semibold">Form Pesanan Hosting</h3>
-              <p class="text-slate-400 text-sm">Isi detail, lalu tekan Kirim Pesanan.</p>
-            </div>
-            <div class="text-sm text-slate-400" id="selectedLabel">Belum memilih paket</div>
-          </div>
+<div class="p-4 rounded-xl glass text-center border" data-paket="Minecraft">
+<h3 class="font-bold text-blue-300">Hosting Minecraft</h3>
+<button class="mt-4 w-full py-2 rounded btn-accent select-paket">Pilih</button>
+</div>
 
-          <form id="hostingForm" class="mt-4 space-y-4">
-            <input type="text" id="hostName" placeholder="Nama lengkap (contoh: Kleren McDeren)" required class="w-full p-3 rounded bg-black/40 border border-slate-700" />
-            <input type="tel" id="hostWa" placeholder="Nomor WhatsApp pemesan (628...)" required class="w-full p-3 rounded bg-black/40 border border-slate-700" />
+<div class="p-4 rounded-xl glass text-center border" data-paket="Bot Discord">
+<h3 class="font-bold text-yellow-300">Hosting Bot Discord</h3>
+<button class="mt-4 w-full py-2 rounded btn-accent select-paket">Pilih</button>
+</div>
 
-            <div class="grid grid-cols-2 gap-3">
-              <p class="text-slate-400 text-sm">Ram</p>
-              <input type="number" id="hostRam" min="1" value="1" class="p-3 rounded bg-black/40 border border-slate-700" placeholder="RAM (GB)" />
-              <p class="text-slate-400 text-sm">CPU</p>
-              <input type="number" id="hostCpu" min="1" value="1" class="p-3 rounded bg-black/40 border border-slate-700" placeholder="CPU (Core)" />
-            </div>
+</div>
 
-            <div class="grid grid-cols-2 gap-3">
-              <p class="text-slate-400 text-sm">Storage</p>
-              <input type="number" id="hostStorage" min="50" step="50" value="50" class="p-3 rounded bg-black/40 border border-slate-700" placeholder="Storage (MB)" />
-              <p class="text-slate-400 text-sm">Slot Player</p>
-              <input type="number" id="hostSlot" min="1" value="10" class="p-3 rounded bg-black/40 border border-slate-700" placeholder="Slot Player" />
-            </div>
+<div id="orderCard" class="glass rounded-2xl p-6 mt-8">
+<h3 class="text-xl font-semibold">Form Pesanan Hosting</h3>
+<p class="text-slate-400 text-sm">Paket dipilih: <span id="selectedLabel">Belum memilih</span></p>
 
-            <textarea id="hostNote" rows="3" placeholder="Catatan / kebutuhan tambahan (opsional)" class="w-full p-3 rounded bg-black/40 border border-slate-700"></textarea>
+<form id="hostingForm" class="mt-4 space-y-4">
 
-            <div class="flex items-center gap-3">
-              <button id="sendHostingBtn" type="submit" class="btn-accent px-4 py-2 rounded font-semibold">Kirim Pesanan</button>
-              <div id="hostStatus" class="text-sm text-slate-300"></div>
-            </div>
+<input type="text" id="hostName" placeholder="Nama lengkap" required class="w-full p-3 rounded bg-black/40 border border-slate-700"/>
+<input type="tel" id="hostWa" placeholder="Nomor WA (08...)" required class="w-full p-3 rounded bg-black/40 border border-slate-700"/>
 
-            <p id="hostPrice" class="text-sm font-bold text-emerald-400"></p>
-            <p id="waFallback" class="text-xs text-slate-400 hidden mt-1">Jika WhatsApp tidak otomatis terbuka, <a id="fallbackLink" href="#" target="_blank" class="text-blue-300 underline">klik di sini</a>.</p>
-          </form>
-        </div>
+<div class="grid grid-cols-2 gap-3">
+<input type="number" id="hostRam" value="1" min="1" class="p-3 rounded bg-black/40 border border-slate-700" placeholder="RAM (GB)"/>
+<input type="number" id="hostCpu" value="1" min="1" class="p-3 rounded bg-black/40 border border-slate-700" placeholder="CPU (Core)"/>
+</div>
 
-          <div class="glass rounded-2xl p-6 text-sm text-slate-300">
-          <h4 class="font-medium">Informasi Hosting</h4>
-          <ul class="mt-2 space-y-1">
-            <li>• Untuk dibawah yang di suruh masukin nomor hp kalian.</li>
-            <li>• Kalian Wajib Isi Ram, Cpu, Storage, Dan Slot Player Server Kalian Kalau Ingin Memesan Hosting.</li>
-            <li>• Data juga tetap dikirim ke endpoint <code class="text-xs">/WhatsApp/Owner</code> (jika tersedia).</li>
-          </ul>
-        </div>
+<div class="grid grid-cols-2 gap-3">
+<input type="number" id="hostStorage" value="50" min="50" step="50" class="p-3 rounded bg-black/40 border border-slate-700" placeholder="Storage (MB)"/>
 
-      </section>
+<div id="slotWrapper">
+<input type="number" id="hostSlot" value="10" min="1" class="p-3 rounded bg-black/40 border border-slate-700" placeholder="Slot Player"/>
+</div>
+</div>
 
-      <!-- kanan: jasa dev + ringkasan -->
-      <aside class="space-y-6">
-        <div class="glass rounded-2xl p-6">
-          <h3 class="text-xl font-semibold">💻 Jasa Script & Website</h3>
-          <form id="devForm" class="mt-4 space-y-3">
-            <input id="devName" placeholder="Nama" class="w-full p-3 rounded bg-black/40 border border-slate-700" required />
-            <input id="devWa" placeholder="Nomor WA (628...)" class="w-full p-3 rounded bg-black/40 border border-slate-700" required />
-            <div class="grid grid-cols-2 gap-3">
-              <select id="devType" class="p-3 rounded bg-black/40 border border-slate-700">
-                <option value="minggu">Minggu (Rp50.000 / Minggu)</option>
-                <option value="bulan">Bulan (Rp150.000 / Bulan)</option>
-              </select>
-              <input id="devAmount" type="number" value="1" min="1" class="p-3 rounded bg-black/40 border border-slate-700" />
-            </div>
-            <textarea id="devNote" rows="3" placeholder="Catatan / deskripsi pekerjaan" class="w-full p-3 rounded bg-black/40 border border-slate-700"></textarea>
+<textarea id="hostNote" rows="3" placeholder="Catatan tambahan" class="w-full p-3 rounded bg-black/40 border border-slate-700"></textarea>
 
-            <div class="flex items-center gap-3">
-              <button id="sendDevBtn" type="submit" class="btn-accent px-4 py-2 rounded font-semibold">Kirim Pesanan</button>
-              <div id="devStatus" class="text-sm text-slate-300"></div>
-            </div>
-            <p id="pricePreview" class="text-sm font-bold text-emerald-400"></p>
-            <p class="text-xs text-slate-400 mt-2">Setelah kirim, pesan akan otomatis terbuka di WhatsApp admin.</p>
-          </form>
-        </div>
+<button type="submit" class="btn-accent px-4 py-2 rounded">Kirim Pesanan</button>
 
-        <div class="glass rounded-2xl p-6 text-sm text-slate-300">
-          <h4 class="font-medium">Informasi</h4>
-          <ul class="mt-2 space-y-1">
-            <li>• Pastikan nomor WA kamu dimulai dengan 62 (contoh: 6281234...).</li>
-            <li>• Jika WhatsApp web/HP tidak terbuka otomatis, gunakan tautan cadangan yang muncul setelah pengiriman.</li>
-            <li>• Data juga tetap dikirim ke endpoint <code class="text-xs">/WhatsApp/Owner</code> (jika tersedia).</li>
-          </ul>
-        </div>
-      </aside>
+<p id="hostPrice" class="text-emerald-400 font-bold"></p>
+<p id="hostStatus" class="text-sm mt-2"></p>
 
-    </div>
-  </main>
+</form>
+</div>
 
-  <footer class="text-center text-slate-400 pb-8">
-    &copy; 2025 Ravs Store — All Rights Reserved
-  </footer>
+</main>
 
-  <!-- SCRIPT -->
-  <script>
-    // === GANTI NOMOR WA ADMIN DI SINI (format: 628xxxxxxxxx) ===
-    const ADMIN_WA = "6285123263221";
+<script>
 
-    // util: hitung harga hosting (sama logika sebelumnya)
-    function calcHostPrice() {
-      const ram = parseInt(document.getElementById("hostRam").value) || 0;
-      const cpu = parseInt(document.getElementById("hostCpu").value) || 0;
-      const storage = parseInt(document.getElementById("hostStorage").value) || 0;
-      const slot = parseInt(document.getElementById("hostSlot").value) || 0;
-      const harga = (ram * 10000) + (cpu * 5000) + ((storage/50) * 10000) + (slot * 1000);
-      return harga;
-    }
+const ADMIN_WA = "6285123263221";
+let selectedHosting = "";
 
-    // update preview harga
-    const hostPriceEl = document.getElementById("hostPrice");
-    ["hostRam","hostCpu","hostStorage","hostSlot"].forEach(id=>{
-      document.getElementById(id).addEventListener("input", () => {
-        hostPriceEl.textContent = "💰 Total Harga: Rp" + calcHostPrice().toLocaleString();
-      });
-    });
-    // set default
-    hostPriceEl.textContent = "💰 Total Harga: Rp" + calcHostPrice().toLocaleString();
+const slotWrapper = document.getElementById("slotWrapper");
 
-    // update jasa dev price
-    const typeEl = document.getElementById("devType");
-    const amountEl = document.getElementById("devAmount");
-    const pricePreview = document.getElementById("pricePreview");
-    function updateDevPrice(){
-      const type = typeEl.value;
-      const amount = parseInt(amountEl.value) || 1;
-      const harga = (type === "minggu") ? 50000*amount : 150000*amount;
-      pricePreview.textContent = "💰 Total Harga: Rp" + harga.toLocaleString();
-      return harga;
-    }
-    typeEl.addEventListener("change", updateDevPrice);
-    amountEl.addEventListener("input", updateDevPrice);
-    updateDevPrice();
+document.querySelectorAll(".select-paket").forEach(btn=>{
+btn.addEventListener("click",(e)=>{
+selectedHosting = e.target.closest("[data-paket]").dataset.paket;
+document.getElementById("selectedLabel").textContent = selectedHosting;
 
-    // handle paket pilih
-    const selectButtons = document.querySelectorAll(".select-paket");
-    let selectedHosting = "";
-    const selectedLabel = document.getElementById("selectedLabel");
-    const orderCard = document.getElementById("orderCard");
-    selectButtons.forEach(btn=>{
-      btn.addEventListener("click", (e)=>{
-        const paket = e.currentTarget.closest('[data-paket]')?.getAttribute('data-paket');
-        if(!paket){
-          // if clicked inner button
-          const container = e.currentTarget.parentElement;
-          selectedHosting = container.getAttribute('data-paket') || "";
-        } else selectedHosting = paket;
-        // if not found above, try parent
-        if(!selectedHosting) {
-          const p = e.currentTarget.closest('[data-paket]');
-          if(p) selectedHosting = p.dataset.paket;
-        }
-        if(!selectedHosting) selectedHosting = "Custom";
-        selectedLabel.textContent = selectedHosting;
-        // tampilkan form (animasi)
-        orderCard.classList.add('show');
-        orderCard.classList.remove('fade-up');
-        orderCard.classList.add('fade-up','show');
-        // scroll to form (halus)
-        orderCard.scrollIntoView({behavior:'smooth', block:'center'});
-      });
-    });
+if(selectedHosting === "Bot Discord"){
+slotWrapper.style.display="none";
+document.getElementById("hostSlot").value = 0;
+}else{
+slotWrapper.style.display="";
+document.getElementById("hostSlot").value = 10;
+}
 
-    // fallback open function: buka WA di tab baru; return reference if opened
-    function openWhatsAppLink(url) {
-      // usahakan membuka popup langsung (dari event user)
-      const win = window.open(url, '_blank');
-      if(!win) {
-        // popup diblokir, berikan fallback (ganti location di same tab)
-        window.location.href = url;
-      }
-      return win;
-    }
+updatePrice();
+});
+});
 
-    // === HOSTING FORM SUBMIT ===
-    document.getElementById('hostingForm').addEventListener('submit', (e)=>{
-      e.preventDefault();
+function calcPrice(){
+const ram = parseInt(hostRam.value)||0;
+const cpu = parseInt(hostCpu.value)||0;
+const storage = parseInt(hostStorage.value)||0;
+const slot = parseInt(hostSlot.value)||0;
 
-      const name = document.getElementById('hostName').value.trim();
-      const wa = document.getElementById('hostWa').value.trim();
-      const ram = document.getElementById("hostRam").value;
-      const cpu = document.getElementById("hostCpu").value;
-      const storage = document.getElementById("hostStorage").value;
-      const slot = document.getElementById("hostSlot").value;
-      const note = document.getElementById('hostNote').value.trim();
-      const statusEl = document.getElementById('hostStatus');
+let harga = (ram*10000)+(cpu*5000)+((storage/50)*10000);
 
-      if(!selectedHosting) {
-        statusEl.textContent = "⚠️ Silakan pilih paket hosting terlebih dahulu.";
-        return;
-      }
-      // validasi nomor pemesan minimal format 62...
-      if(!/^0\d{6,}$/.test(wa)) {
-        statusEl.textContent = "⚠️ Nomor WA pemesan harus dalam format 08 (contoh: 08123...).";
-        return;
-      }
+if(selectedHosting !== "Bot Discord"){
+harga += (slot*1000);
+}
+return harga;
+}
 
-      const harga = calcHostPrice();
+function updatePrice(){
+hostPrice.textContent="💰 Total Harga: Rp"+calcPrice().toLocaleString();
+}
 
-      // Susun pesan WA
-      const pesan =
-`🔥 *Pesanan Hosting Baru* 🔥
-Nama: ${name}
-WA Pemesan: ${wa}
-Paket: ${selectedHosting}
-RAM: ${ram} GB
-CPU: ${cpu} Core
-Storage: ${storage} MB
-Slot: ${slot}
-Harga: Rp${harga.toLocaleString()}
-Catatan: ${note}`;
+["hostRam","hostCpu","hostStorage","hostSlot"].forEach(id=>{
+document.getElementById(id).addEventListener("input",updatePrice);
+});
 
-      const waUrl = `https://wa.me/${ADMIN_WA}?text=${encodeURIComponent(pesan)}`;
+updatePrice();
 
-      // BUKA WHATSAPP SEGERA (agar tidak diblokir)
-      const waWindow = openWhatsAppLink(waUrl);
+document.getElementById("hostingForm").addEventListener("submit",async(e)=>{
+e.preventDefault();
 
-      // tampilkan pesan status sementara
-      statusEl.textContent = "Mengirim data... (WhatsApp terbuka)";
+if(!selectedHosting){
+hostStatus.textContent="⚠️ Pilih paket dulu.";
+return;
+}
 
-      // tampilkan fallback link untuk user jika WA tidak terbuka otomatis
-      const fallbackEl = document.getElementById('waFallback');
-      const fallbackLink = document.getElementById('fallbackLink');
-      fallbackLink.href = waUrl;
-      fallbackEl.classList.remove('hidden');
+const name = hostName.value.trim();
+const wa = hostWa.value.trim();
+const harga = calcPrice();
 
-      // kirim juga ke endpoint server jika tersedia (tidak menunggu keberhasilan untuk WA)
-      fetch('/api/order', {
-        method: 'POST',
-        headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({
-          paket: 'hosting ' + selectedHosting,
-          name,
-          wa,
-          note: `RAM: ${ram}GB, CPU: ${cpu} Core, Storage: ${storage}MB, Slot: ${slot}, Total: Rp${harga.toLocaleString()}\n${note}`
-        })
-      })
-      .then(async res=> {
-        if(res.ok) {
-          statusEl.textContent = "✅ Pesanan terkirim ke server. Cek WhatsApp admin untuk konfirmasi.";
-          document.getElementById('hostingForm').reset();
-          hostPriceEl.textContent = "💰 Total Harga: Rp" + calcHostPrice().toLocaleString();
-        } else {
-          const json = await res.json().catch(()=>({}));
-          statusEl.textContent = "⚠️ Server: " + (json.message || res.statusText || 'Gagal menyimpan');
-        }
-      })
-      .catch(err=>{
-        // tidak fatal — WA sudah diupayakan terbuka
-        statusEl.textContent = "⚠️ Tidak dapat mengirim ke server, tapi WhatsApp sudah terbuka. (" + (err.message||'') + ")";
-      });
-    });
-
-    // === JASA DEV FORM SUBMIT ===
-    document.getElementById('devForm').addEventListener('submit', (e)=>{
-      e.preventDefault();
-
-      const name = document.getElementById('devName').value.trim();
-      const wa = document.getElementById('devWa').value.trim();
-      const type = document.getElementById('devType').value;
-      const amount = parseInt(document.getElementById('devAmount').value) || 1;
-      const note = document.getElementById('devNote').value.trim();
-      const statusEl = document.getElementById('devStatus');
-      const harga = updateDevPrice();
-
-      if(!/^0\d{6,}$/.test(wa)) {
-        statusEl.textContent = "⚠️ Nomor WA pemesan harus dalam format 08 (contoh: 08123...).";
-        return;
-      }
-
-      const pesan =
-`💻 *Pesanan Jasa Development Baru* 💻
-Nama: ${name}
-WA Pemesan: ${wa}
-Durasi: ${amount} ${type}
-Harga: Rp${harga.toLocaleString()}
-Catatan: ${note}`;
-
-      const waUrl = `https://wa.me/${ADMIN_WA}?text=${encodeURIComponent(pesan)}`;
-      openWhatsAppLink(waUrl);
-
-      // fallback link (jika ingin)
-      document.getElementById('waFallback').classList.remove('hidden');
-
-      statusEl.textContent = "Mengirim data... (WhatsApp terbuka)";
-
-      fetch('/api/order', {
-        method: 'POST',
-        headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({
-          paket: 'jasa-dev',
-          name,
-          wa,
-          note: `Durasi: ${amount} ${type}, Total: Rp${harga.toLocaleString()}\n${note}`
-        })
-      })
-      .then(async res=>{
-        if(res.ok) {
-          statusEl.textContent = "✅ Pesanan jasa terkirim ke server. Cek WhatsApp admin untuk konfirmasi.";
-          document.getElementById('devForm').reset();
-          updateDevPrice();
-        } else {
-          const json = await res.json().catch(()=>({}));
-          statusEl.textContent = "⚠️ Server: " + (json.message || res.statusText || 'Gagal menyimpan');
-        }
-      })
-      .catch(err=>{
-        statusEl.textContent = "⚠️ Tidak dapat mengirim ke server, tapi WhatsApp sudah terbuka. (" + (err.message||'') + ")";
-      });
-
-    });
-
-    // Animasi masuk untuk orderCard
-    window.addEventListener('load', ()=> {
-      setTimeout(()=> {
-        orderCard.classList.add('show');
-        orderCard.classList.remove('fade-up');
-        orderCard.classList.add('fade-up','show');
-      }, 220);
-    });
-
-  </script>
-
-</body>
-</html>
-  <script>
-    const ADMIN_WA = "6285123263221"; // 🔥 GANTI DENGAN NOMOR WHATSAPP KAMU TANPA + DAN TANPA 0 DEPAN
-
-    let selectedHosting = "";
-
-    function selectHosting(name) {
-      selectedHosting = name;
-      document.getElementById("selectedHosting").textContent = name;
-      document.getElementById("orderHosting").classList.remove("hidden");
-      updateHostPrice();
-    }
-
-    function updateHostPrice() {
-      const ram = parseInt(document.getElementById("hostRam").value) || 0;
-      const cpu = parseInt(document.getElementById("hostCpu").value) || 0;
-      const storage = parseInt(document.getElementById("hostStorage").value) || 0;
-      const slot = parseInt(document.getElementById("hostSlot").value) || 0;
-
-      const harga = (ram * 10000) + (cpu * 5000) + ((storage/50) * 10000) + (slot * 1000);
-      document.getElementById("hostPrice").textContent = "💰 Total Harga: Rp" + harga.toLocaleString();
-      return harga;
-    }
-
-    document.getElementById("hostRam").addEventListener("input", updateHostPrice);
-    document.getElementById("hostCpu").addEventListener("input", updateHostPrice);
-    document.getElementById("hostStorage").addEventListener("input", updateHostPrice);
-    document.getElementById("hostSlot").addEventListener("input", updateHostPrice);
-
-    // === Hosting Order ===
-    document.getElementById('hostingForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const name = document.getElementById('hostName').value.trim();
-      const wa = document.getElementById('hostWa').value.trim();
-      const ram = document.getElementById("hostRam").value;
-      const cpu = document.getElementById("hostCpu").value;
-      const storage = document.getElementById("hostStorage").value;
-      const slot = document.getElementById("hostSlot").value;
-      const note = document.getElementById('hostNote').value.trim();
-      const statusEl = document.getElementById('hostStatus');
-      const harga = updateHostPrice();
-
-      statusEl.textContent = `Mengirim...`;
-
-      try {
-        const res = await fetch('/api/order', {
-          method: 'POST',
-          headers: {'Content-Type':'application/json'},
-          body: JSON.stringify({ 
-            paket: 'hosting ' + selectedHosting, 
-            name, 
-            wa, 
-            note: `RAM: ${ram}GB, CPU: ${cpu} Core, Storage: ${storage}MB, Slot: ${slot}, Total: Rp${harga.toLocaleString()}\n${note}` 
-          })
-        });
-
-        const json = await res.json();
-        if (res.ok) {
-          statusEl.textContent = '✅ Pesanan Hosting terkirim!';
-          document.getElementById('hostingForm').reset();
-          updateHostPrice();
-
-          // 🔥 Kirim ke WhatsApp admin otomatis
-          const pesan = 
-`🔥 *Pesanan Hosting Baru* 🔥
+const pesan =
+`🔥 Pesanan Hosting 🔥
 Nama: ${name}
 WA: ${wa}
 Paket: ${selectedHosting}
-RAM: ${ram} GB
-CPU: ${cpu} Core
-Storage: ${storage} MB
-Slot: ${slot}
+RAM: ${hostRam.value} GB
+CPU: ${hostCpu.value} Core
+Storage: ${hostStorage.value} MB
+${selectedHosting !== "Bot Discord" ? `Slot: ${hostSlot.value}` : ""}
 Harga: Rp${harga.toLocaleString()}
-Catatan: ${note}`;
-          window.open(`https://wa.me/${ADMIN_WA}?text=${encodeURIComponent(pesan)}`, '_blank');
-        } else {
-          statusEl.textContent = '❌ Gagal: ' + (json?.message || res.statusText);
-        }
-      } catch (err) {
-        statusEl.textContent = '⚠️ Error koneksi.';
-      }
-    });
+Catatan: ${hostNote.value}`;
 
-    // === Jasa Dev ===
-    const typeEl = document.getElementById('devType');
-    const amountEl = document.getElementById('devAmount');
-    const pricePreview = document.getElementById('pricePreview');
+window.open(`https://wa.me/${ADMIN_WA}?text=${encodeURIComponent(pesan)}`,'_blank');
 
-    function updatePrice() {
-      const type = typeEl.value;
-      const amount = parseInt(amountEl.value) || 1;
-      let harga = 0;
-      if (type === "minggu") harga = 50000 * amount;
-      else if (type === "bulan") harga = 150000 * amount;
-      pricePreview.textContent = "💰 Total Harga: Rp" + harga.toLocaleString();
-      return harga;
-    }
+try{
+await fetch('/api/order',{
+method:'POST',
+headers:{'Content-Type':'application/json'},
+body:JSON.stringify({
+paket:selectedHosting,
+name,
+wa,
+note:pesan
+})
+});
+hostStatus.textContent="✅ Pesanan terkirim!";
+hostingForm.reset();
+updatePrice();
+}catch{
+hostStatus.textContent="⚠️ Gagal kirim ke server, tapi WA sudah terbuka.";
+}
 
-    typeEl.addEventListener("change", updatePrice);
-    amountEl.addEventListener("input", updatePrice);
-    updatePrice();
+});
 
-    document.getElementById('devForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const name = document.getElementById('devName').value.trim();
-      const wa = document.getElementById('devWa').value.trim();
-      const type = typeEl.value;
-      const amount = parseInt(amountEl.value) || 1;
-      const note = document.getElementById('devNote').value.trim();
-      const statusEl = document.getElementById('devStatus');
-      const harga = updatePrice();
+</script>
 
-      statusEl.textContent = `Mengirim...`;
-
-      try {
-        const res = await fetch('/api/order', {
-          method: 'POST',
-          headers: {'Content-Type':'application/json'},
-          body: JSON.stringify({ 
-            paket: 'jasa-dev', 
-            name, 
-            wa, 
-            note: `Durasi: ${amount} ${type}, Total: Rp${harga.toLocaleString()}\n${note}` 
-          })
-        });
-
-        const json = await res.json();
-        if (res.ok) {
-          statusEl.textContent = '✅ Pesanan Jasa Dev terkirim!';
-          document.getElementById('devForm').reset();
-          updatePrice();
-
-          // 🔥 Kirim ke WhatsApp admin otomatis
-          const pesan =
-`💻 *Pesanan Jasa Development Baru* 💻
-Nama: ${name}
-WA: ${wa}
-Durasi: ${amount} ${type}
-Harga: Rp${harga.toLocaleString()}
-Catatan: ${note}`;
-          window.open(`https://wa.me/${ADMIN_WA}?text=${encodeURIComponent(pesan)}`, '_blank');
-        } else {
-          statusEl.textContent = '❌ Gagal: ' + (json?.message || res.statusText);
-        }
-      }
-    });
-  </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

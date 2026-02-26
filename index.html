@@ -1,75 +1,98 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Ravs Store Hosting & Jasa — Script And Website</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Ravs Store Hosting & Jasa</title>
 
-  <!-- Tailwind (CDN) -->
-  <script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Custom styles tambahan untuk memperbagus isi -->
-  <style>
-    :root{
-      --glass-bg: rgba(255,255,255,0.04);
-      --accent: linear-gradient(90deg,#ef4444,#0ea5e9);
-      --card-border: rgba(255,255,255,0.06);
-    }
+<style>
+:root{
+  --glass-bg: rgba(255,255,255,0.04);
+  --card-border: rgba(255,255,255,0.06);
+}
 
-    body {
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      background: radial-gradient(1200px 600px at 10% 10%, rgba(14,165,233,0.06), transparent 5%),
-                  radial-gradient(900px 400px at 90% 90%, rgba(239,68,68,0.05), transparent 5%),
-                  #000000;
-      min-height:100vh;
-    }
+body{
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  background:#000;
+  min-height:100vh;
+  color:#e2e8f0;
+  font-family:sans-serif;
+}
 
-    <div class="cyber-bg">
-      <div class="grid"></div>
-      <div class="scanline"></div>
-    </div>
+/* ===============================
+   CYBER GRID BACKGROUND
+=================================*/
 
-    .glass {
-      background: var(--glass-bg);
-      backdrop-filter: blur(6px) saturate(120%);
-      border: 1px solid var(--card-border);
-    }
+.cyber-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  background: radial-gradient(circle at center, #0f172a 0%, #000 70%);
+}
 
-    .fancy-title {
-      background: -webkit-linear-gradient(#fff, #e2e8f0);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      filter: drop-shadow(0 4px 18px rgba(0,0,0,0.6));
-    }
+.grid {
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background-image:
+    linear-gradient(rgba(14,165,233,0.15) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(14,165,233,0.15) 1px, transparent 1px);
+  background-size: 60px 60px;
+  transform: rotateX(60deg) translateY(-20%);
+  transform-origin: center;
+  animation: moveGrid 20s linear infinite;
+  opacity: 0.4;
+}
 
-    /* tombol lebih menarik */
-    .btn-accent {
-      background: linear-gradient(90deg,#ef4444,#0ea5e9);
-      color: #fff;
-      box-shadow: 0 6px 20px rgba(14,165,233,0.08), inset 0 -3px 8px rgba(0,0,0,0.12);
-    }
+@keyframes moveGrid {
+  from { transform: rotateX(60deg) translateY(-20%); }
+  to   { transform: rotateX(60deg) translateY(-60%); }
+}
 
-    /* input fokus */
-    input:focus, textarea:focus, select:focus {
-      outline: none;
-      box-shadow: 0 6px 18px rgba(14,165,233,0.06);
-      border-color: rgba(14,165,233,0.6);
-    }
+.scanline {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    rgba(255,255,255,0.04) 1px,
+    transparent 1px
+  );
+  background-size: 100% 4px;
+  animation: scan 6s linear infinite;
+  pointer-events: none;
+}
 
-    /* animasi muncul form */
-    .fade-up { transform: translateY(8px); opacity: 0; transition: all .36s cubic-bezier(.2,.9,.2,1); }
-    .fade-up.show { transform: translateY(0); opacity: 1; }
+@keyframes scan {
+  from { background-position-y: 0; }
+  to   { background-position-y: 100px; }
+}
 
-    /* kecilkan placeholder warna */
-    ::placeholder { color: rgba(203,213,225,0.18); }
+/* Glass Card */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(6px);
+  border: 1px solid var(--card-border);
+}
 
-    /* responsive tweak */
-    @media (min-width:768px){
-      .content-grid { display: grid; grid-template-columns: 1fr 420px; gap: 28px; align-items: start; }
-    }
-  </style>
+.btn-accent {
+  background: linear-gradient(90deg,#ef4444,#0ea5e9);
+  color: white;
+}
+
+</style>
 </head>
+
+<body>
+
+<!-- Background -->
+<div class="cyber-bg">
+  <div class="grid"></div>
+  <div class="scanline"></div>
+</div>
 <body class="text-slate-100 antialiased font-sans">
 
   <header class="py-8 text-center">
@@ -581,6 +604,7 @@ Catatan: ${note}`;
   </script>
 </body>
 </html>
+
 
 
 

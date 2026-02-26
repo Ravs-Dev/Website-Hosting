@@ -96,12 +96,21 @@ body{
 <p class="text-slate-400 text-sm">Paket: <span id="selectedLabel">Belum memilih</span></p>
 
 <form id="hostingForm" class="mt-4 space-y-4">
+
 <input type="text" id="hostName" placeholder="Nama lengkap" required class="w-full p-3 rounded bg-black/40 border border-slate-700">
 <input type="tel" id="hostWa" placeholder="Nomor WA (08...)" required class="w-full p-3 rounded bg-black/40 border border-slate-700">
 
 <div class="grid grid-cols-2 gap-3">
 <input type="number" id="hostRam" min="1" value="1" class="p-3 rounded bg-black/40 border border-slate-700" placeholder="RAM (GB)">
 <input type="number" id="hostCpu" min="1" value="1" class="p-3 rounded bg-black/40 border border-slate-700" placeholder="CPU (Core)">
+</div>
+
+<!-- BOT TYPE -->
+<div id="botTypeWrapper" style="display:none;">
+<select id="botType" class="w-full p-3 rounded bg-black/40 border border-slate-700">
+<option value="Basic">Basic</option>
+<option value="Higs">Higs</option>
+</select>
 </div>
 
 <div class="grid grid-cols-2 gap-3">
@@ -149,8 +158,7 @@ body{
 const ADMIN_WA="6285123263221";
 let selectedHosting="";
 const slotWrapper=document.getElementById("slotWrapper");
-
-/* ================= HOSTING ================= */
+const botTypeWrapper=document.getElementById("botTypeWrapper");
 
 document.querySelectorAll(".select-paket").forEach(btn=>{
 btn.addEventListener("click",e=>{
@@ -159,9 +167,11 @@ selectedLabel.textContent=selectedHosting;
 
 if(selectedHosting==="Bot Discord"){
 slotWrapper.style.display="none";
+botTypeWrapper.style.display="block";
 hostSlot.value=0;
 }else{
 slotWrapper.style.display="";
+botTypeWrapper.style.display="none";
 hostSlot.value=10;
 }
 updateHostPrice();
@@ -170,26 +180,36 @@ updateHostPrice();
 
 function calcHostPrice(){
 let harga=(hostRam.value*10000)+(hostCpu.value*5000)+((hostStorage.value/50)*10000);
-if(selectedHosting!=="Bot Discord"){
+
+if(selectedHosting==="Bot Discord"){
+if(botType.value==="Basic") harga+=20000;
+if(botType.value==="Higs") harga+=40000;
+}else{
 harga+=(hostSlot.value*1000);
 }
+
 return harga;
 }
+
 function updateHostPrice(){
 hostPrice.textContent="💰 Total Harga: Rp"+Number(calcHostPrice()).toLocaleString();
 }
-["hostRam","hostCpu","hostStorage","hostSlot"].forEach(id=>{
+
+["hostRam","hostCpu","hostStorage","hostSlot","botType"].forEach(id=>{
 document.getElementById(id).addEventListener("input",updateHostPrice);
 });
+
 updateHostPrice();
 
-hostingForm.addEventListener("submit",async e=>{
+hostingForm.addEventListener("submit",e=>{
 e.preventDefault();
 if(!selectedHosting){
 hostStatus.textContent="⚠️ Pilih paket dulu.";
 return;
 }
+
 let harga=calcHostPrice();
+
 let pesan=
 `🔥 Pesanan Hosting 🔥
 Nama: ${hostName.value}
@@ -198,28 +218,19 @@ Paket: ${selectedHosting}
 RAM: ${hostRam.value} GB
 CPU: ${hostCpu.value} Core
 Storage: ${hostStorage.value} MB
-${selectedHosting!=="Bot Discord" ? "Slot: "+hostSlot.value : ""}
+${selectedHosting==="Bot Discord" ? "Paket Bot: "+botType.value : "Slot: "+hostSlot.value}
 Harga: Rp${Number(harga).toLocaleString()}
 Catatan: ${hostNote.value}`;
 
 window.open(`https://wa.me/${ADMIN_WA}?text=${encodeURIComponent(pesan)}`,"_blank");
-
-await fetch("/api/order",{
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({paket:selectedHosting,name:hostName.value,wa:hostWa.value,note:pesan})
-});
 
 hostStatus.textContent="✅ Pesanan terkirim!";
 hostingForm.reset();
 updateHostPrice();
 });
 
-/* ================= JASA DEV ================= */
-
 function calcDevPrice(){
-let harga=(devType.value==="minggu"?50000:150000)*devAmount.value;
-return harga;
+return (devType.value==="minggu"?50000:150000)*devAmount.value;
 }
 function updateDevPrice(){
 devPrice.textContent="💰 Total Harga: Rp"+Number(calcDevPrice()).toLocaleString();
@@ -228,7 +239,7 @@ devType.addEventListener("change",updateDevPrice);
 devAmount.addEventListener("input",updateDevPrice);
 updateDevPrice();
 
-devForm.addEventListener("submit",async e=>{
+devForm.addEventListener("submit",e=>{
 e.preventDefault();
 let harga=calcDevPrice();
 
@@ -241,12 +252,6 @@ Harga: Rp${Number(harga).toLocaleString()}
 Catatan: ${devNote.value}`;
 
 window.open(`https://wa.me/${ADMIN_WA}?text=${encodeURIComponent(pesan)}`,"_blank");
-
-await fetch("/api/order",{
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({paket:"jasa-dev",name:devName.value,wa:devWa.value,note:pesan})
-});
 
 devStatus.textContent="✅ Pesanan jasa terkirim!";
 devForm.reset();
